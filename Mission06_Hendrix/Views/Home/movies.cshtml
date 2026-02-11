@@ -1,0 +1,95 @@
+@* 
+    MODEL BINDING: @model tells this view it receives a Movie object.
+    When the form posts, ASP.NET automatically maps input values to Movie properties (model binding).
+*@
+@model Mission06_Hendrix.Models.Movie
+@{
+    ViewData["Title"] = "Add Movie";
+}
+
+<div class="container">
+    <h1>Add Movie to Collection</h1>
+
+    @* 
+        TAG HELPERS: asp-action/asp-controller generate the correct action URL.
+        method="post" sends form data to the server (GET would put it in the URL).
+    *@
+    <form asp-action="Movies" asp-controller="Home" method="post" class="mt-4">
+        @* Shows all validation errors from the Model (from [Required], [StringLength], etc.) *@
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        @* asp-for connects the input to the Model property; validation messages show in the span *@
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label">Category</label>
+            <input asp-for="Category" class="form-control" placeholder="e.g., Action, Comedy, Drama" />
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" placeholder="Movie title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Year" class="form-label">Year</label>
+            <input asp-for="Year" class="form-control" type="number" min="1888" max="2100" placeholder="e.g., 2024" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Director" class="form-label">Director</label>
+            <input asp-for="Director" class="form-control" placeholder="Director name" />
+            <span asp-validation-for="Director" class="text-danger"></span>
+        </div>
+
+        @* Dropdown for Rating: required field with fixed options (G, PG, PG-13, R) *@
+        <div class="mb-3">
+            <label asp-for="Rating" class="form-label">Rating</label>
+            <select asp-for="Rating" class="form-select">
+                <option value="">-- Select Rating --</option>
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG-13">PG-13</option>
+                <option value="R">R</option>
+            </select>
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+
+        @* Edited: optional bool? (Yes/No). Empty option binds to null; "true"/"false" bind to bool. *@
+        <div class="mb-3">
+            <label asp-for="Edited" class="form-label">Edited</label>
+            <select asp-for="Edited" class="form-select">
+                <option value="">-- Select --</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <small class="form-text text-muted">Optional</small>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="LentTo" class="form-label">Lent To</label>
+            <input asp-for="LentTo" class="form-control" placeholder="Person you lent the movie to" />
+            <small class="form-text text-muted">Optional</small>
+        </div>
+
+        @* maxlength="25" limits input on client; [StringLength(25)] validates on server (defense in depth) *@
+        <div class="mb-3">
+            <label asp-for="Notes" class="form-label">Notes</label>
+            <input asp-for="Notes" class="form-control" maxlength="25" placeholder="Max 25 characters" />
+            <span asp-validation-for="Notes" class="text-danger"></span>
+            <small class="form-text text-muted">Optional, limited to 25 characters</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Movie</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+
+@* 
+    SECTION: Renders this block in _Layout's @RenderSectionAsync("Scripts").
+    _ValidationScriptsPartial includes jQuery validation for client-side checks (faster feedback than server round-trip).
+*@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

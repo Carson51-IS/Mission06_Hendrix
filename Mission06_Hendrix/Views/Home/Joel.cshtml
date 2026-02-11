@@ -1,0 +1,31 @@
+@* 
+    RAZOR: ViewData sets the page title shown in the browser tab.
+    The _Layout.cshtml uses this for <title>@ViewData["Title"]</title>
+*@
+@{
+    ViewData["Title"] = "Get to Know Joel";
+}
+
+<div>
+    <h1>Get to Know Joel</h1>
+    
+    @* External links: target="_blank" opens in new tab. rel="noopener noreferrer" prevents the new page from accessing window.opener (security best practice). *@
+    <p>
+        <a href="https://www.qwcomedy.com/" target="_blank" rel="noopener noreferrer">Quick Wits Comedy</a> — where Joel performs regularly
+    </p>
+    
+    <p>
+        <a href="https://baconsale.com/" target="_blank" rel="noopener noreferrer">Baconsale</a>
+    </p>
+    
+    @* 
+        Clickable image: wrapping <img> in <a> makes the whole image a link.
+        Url.Content("~/img/...") converts ~ (app root) to the correct path and handles special chars in filenames (spaces, parentheses).
+        class="img-fluid" = Bootstrap responsive image; style limits max width.
+    *@
+    <p>
+        <a href="https://baconsale.com/" target="_blank" rel="noopener noreferrer">
+            <img src="@Url.Content("~/img/1 (1).jpg")" alt="Joel Hilton" class="img-fluid" style="max-width: 400px;" />
+        </a>
+    </p>
+</div>

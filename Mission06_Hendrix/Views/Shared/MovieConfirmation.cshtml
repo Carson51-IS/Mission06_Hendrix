@@ -1,0 +1,15 @@
+@* Receives the saved Movie from the controller so we can display its Title in the success message *@
+@model Mission06_Hendrix.Models.Movie
+@{
+    ViewData["Title"] = "Movie Added";
+}
+
+<div class="container">
+    <h1>Movie Added Successfully!</h1>
+    <p class="lead">"@Model.Title" has been added to the collection.</p>
+    @* asp-controller/asp-action generate links without hardcoding URLs (stays correct if routes change) *@
+    <p>
+        <a asp-controller="Home" asp-action="Movies" class="btn btn-primary">Add Another Movie</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Back to Home</a>
+    </p>
+</div>
