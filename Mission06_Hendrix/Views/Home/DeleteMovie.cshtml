@@ -1,0 +1,29 @@
+@*
+    Delete Movie view (Mission 7): Confirmation page before permanently removing a movie.
+    POST form sends MovieId so the controller can delete the correct record.
+*@
+@model Mission06_Hendrix.Models.Movie
+@{
+    ViewData["Title"] = "Delete Movie";
+}
+
+<div class="container">
+    <h1 class="text-danger">Delete Movie</h1>
+    <p class="lead">Are you sure you want to remove this movie from the collection?</p>
+
+    @* Display key details so the user can confirm they're deleting the right movie. *@
+    <div class="card mb-4">
+        <div class="card-body">
+            <p><strong>Title:</strong> @(Model.Title ?? "—")</p>
+            <p><strong>Year:</strong> @(Model.Year?.ToString() ?? "—")</p>
+            <p><strong>Director:</strong> @(Model.Director ?? "—")</p>
+            <p><strong>Rating:</strong> @(Model.Rating ?? "—")</p>
+        </div>
+    </div>
+
+    <form asp-action="DeleteMovie" asp-controller="Home" method="post">
+        <input type="hidden" asp-for="MovieId" />
+        <button type="submit" class="btn btn-danger">Yes, Delete Movie</button>
+        <a asp-controller="Home" asp-action="MovieList" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

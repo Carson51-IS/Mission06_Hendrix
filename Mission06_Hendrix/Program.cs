@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Registers MovieFormContext so it can be injected into controllers.
-// Connection string from appsettings.json tells EF to use SQLite file "movieform.sqlite"
+// Connection string from appsettings.json tells EF to use SQLite file "JoelHiltonMovieCollection.sqlite"
 builder.Services.AddDbContext<MovieFormContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MovieConnection")));
 

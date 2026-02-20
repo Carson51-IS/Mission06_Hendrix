@@ -1,3 +1,4 @@
+@* Shared layout (Mission 6/7): Wraps every page with header nav, Bootstrap CSS, and footer. @RenderBody() injects the current view. *@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @* Nav links shared across all pages. asp-controller/asp-action = Tag Helpers; they generate the correct hrefs. *@
+                @* Nav links (Mission 6/7): Home, Joel, Movie List, Add Movie, Privacy. Tag Helpers generate correct URLs. *@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -26,6 +27,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Joel">Get to Know Joel</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MovieList">Movie List</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Add Movie</a>

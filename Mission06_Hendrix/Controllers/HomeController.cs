@@ -57,5 +57,58 @@ namespace Mission06_Hendrix.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        /// <summary>GET: Displays all movies in the collection (Mission 7 - Movie List).</summary>
+        public IActionResult MovieList()
+        {
+            var movies = _context.Movies.OrderBy(m => m.Title).ToList();
+            return View(movies);
+        }
+
+        /// <summary>GET: Shows the Edit Movie form with the selected movie's data loaded.</summary>
+        [HttpGet]
+        public IActionResult EditMovie(int id)
+        {
+            var movie = _context.Movies.Find(id);
+            if (movie == null)
+                return NotFound();
+            return View(movie);
+        }
+
+        /// <summary>POST: Saves changes to the movie and redirects to Movie List.</summary>
+        [HttpPost]
+        public IActionResult EditMovie(Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Movies.Update(movie);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(MovieList));
+            }
+            return View(movie);
+        }
+
+        /// <summary>GET: Shows the Delete confirmation page for the selected movie.</summary>
+        [HttpGet]
+        public IActionResult DeleteMovie(int id)
+        {
+            var movie = _context.Movies.Find(id);
+            if (movie == null)
+                return NotFound();
+            return View(movie);
+        }
+
+        /// <summary>POST: Permanently deletes the movie and redirects to Movie List.</summary>
+        [HttpPost]
+        public IActionResult DeleteMovie(Movie movie)
+        {
+            var toDelete = _context.Movies.Find(movie.MovieId);
+            if (toDelete != null)
+            {
+                _context.Movies.Remove(toDelete);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(MovieList));
+        }
     }
 }
