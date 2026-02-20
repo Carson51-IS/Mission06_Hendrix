@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mission06_Hendrix.Models
 {
@@ -13,9 +12,9 @@ namespace Mission06_Hendrix.Models
         [Key]  // Primary key; EF expects this for the main identifier
         public int MovieId { get; set; }
 
-        [Required(ErrorMessage = "Category is required")]
-        [Column("CategoryId")]  // Joel Hilton DB column is CategoryId (table matches: Title, Year, Director, etc.)
-        public string? Category { get; set; }
+        /// <summary>Optional. FK to Categories table (Joel Hilton DB); must be null or a valid CategoryId.</summary>
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; } = string.Empty;
@@ -24,10 +23,8 @@ namespace Mission06_Hendrix.Models
         [Range(1888, 2100, ErrorMessage = "Year must be 1888 or later (first movie year).")]
         public int? Year { get; set; }
 
-        [Required(ErrorMessage = "Director is required")]
         public string? Director { get; set; }
 
-        [Required(ErrorMessage = "Rating is required")]
         public string? Rating { get; set; }
 
         /// <summary>Required: Was the movie edited? (Yes/No).</summary>

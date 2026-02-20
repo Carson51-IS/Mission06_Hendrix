@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission06_Hendrix.Data;
 using Mission06_Hendrix.Models;
 
@@ -35,6 +36,7 @@ namespace Mission06_Hendrix.Controllers
         [HttpGet]
         public IActionResult Movies()
         {
+            ViewBag.Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList();
             return View("movies");
         }
 
@@ -48,7 +50,7 @@ namespace Mission06_Hendrix.Controllers
                 _context.SaveChanges();  // Persists to SQLite
                 return View("MovieConfirmation", movie);
             }
-            // Validation failed: redisplay form with error messages
+            ViewBag.Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList();
             return View("movies", movie);
         }
 
@@ -61,7 +63,7 @@ namespace Mission06_Hendrix.Controllers
         /// <summary>GET: Displays all movies in the collection (Mission 7 - Movie List).</summary>
         public IActionResult MovieList()
         {
-            var movies = _context.Movies.OrderBy(m => m.Title).ToList();
+            var movies = _context.Movies.Include(m => m.Category).OrderBy(m => m.Title).ToList();
             return View(movies);
         }
 
@@ -72,6 +74,7 @@ namespace Mission06_Hendrix.Controllers
             var movie = _context.Movies.Find(id);
             if (movie == null)
                 return NotFound();
+            ViewBag.Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList();
             return View(movie);
         }
 
@@ -85,6 +88,7 @@ namespace Mission06_Hendrix.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(MovieList));
             }
+            ViewBag.Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList();
             return View(movie);
         }
 

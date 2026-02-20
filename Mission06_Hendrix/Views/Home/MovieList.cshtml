@@ -36,7 +36,7 @@
             {
                 <tr>
                     <td>@(movie.Title ?? "—")</td>
-                    <td>@(movie.Category ?? "—")</td>
+                    <td>@(movie.Category?.CategoryName ?? "—")</td>
                     <td>@(movie.Year?.ToString() ?? "—")</td>
                     <td>@(movie.Director ?? "—")</td>
                     <td>@(movie.Rating ?? "—")</td>

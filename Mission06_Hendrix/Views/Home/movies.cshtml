@@ -19,11 +19,17 @@
         @* Shows all validation errors from the Model (from [Required], [StringLength], etc.) *@
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        @* asp-for connects the input to the Model property; validation messages show in the span *@
+        @* Category: optional; must be a valid CategoryId from the database (Joel Hilton DB FK). *@
         <div class="mb-3">
-            <label asp-for="Category" class="form-label">Category</label>
-            <input asp-for="Category" class="form-control" placeholder="e.g., Action, Comedy, Drama" />
-            <span asp-validation-for="Category" class="text-danger"></span>
+            <label asp-for="CategoryId" class="form-label">Category</label>
+            <select asp-for="CategoryId" class="form-select">
+                <option value="">-- Optional --</option>
+                @foreach (var c in (ViewBag.Categories as IEnumerable<Mission06_Hendrix.Models.Category>) ?? Enumerable.Empty<Mission06_Hendrix.Models.Category>())
+                {
+                    <option value="@c.CategoryId">@c.CategoryName</option>
+                }
+            </select>
+            <small class="form-text text-muted">Optional</small>
         </div>
 
         <div class="mb-3">
@@ -32,6 +38,7 @@
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
+        @* Required: Year, 1888 or later (Mission 7). *@
         <div class="mb-3">
             <label asp-for="Year" class="form-label">Year</label>
             <input asp-for="Year" class="form-control" type="number" min="1888" max="2100" placeholder="e.g., 2024" />
@@ -41,10 +48,10 @@
         <div class="mb-3">
             <label asp-for="Director" class="form-label">Director</label>
             <input asp-for="Director" class="form-control" placeholder="Director name" />
-            <span asp-validation-for="Director" class="text-danger"></span>
+            <small class="form-text text-muted">Optional</small>
         </div>
 
-        @* Dropdown for Rating: required field with fixed options (G, PG, PG-13, R) *@
+        @* Rating: optional dropdown (G, PG, PG-13, R). *@
         <div class="mb-3">
             <label asp-for="Rating" class="form-label">Rating</label>
             <select asp-for="Rating" class="form-select">
@@ -54,7 +61,7 @@
                 <option value="PG-13">PG-13</option>
                 <option value="R">R</option>
             </select>
-            <span asp-validation-for="Rating" class="text-danger"></span>
+            <small class="form-text text-muted">Optional</small>
         </div>
 
         @* Edited: required (Mission 7). User must select Yes or No. *@
